@@ -6,9 +6,10 @@ on:
     - cron: '19 3 * * *'
   workflow_dispatch:
     inputs:
-      description: nothing
-      required: false
-      default: ignore
+      useless:
+        description: nothing
+        required: false
+        default: ignore
 
 jobs:
   build:
