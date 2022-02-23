@@ -48,7 +48,7 @@ foreach my $k (keys %c6) {
 }
 no bigint;
 foreach my $k (keys %out) {
-   next if ($k eq 'Total');
+   next if ($k =~ /Total|EU/);
    $out{$k}->{name} = $ci{$k}->{name} || $k;
    $out{$k}->{pop} = $ci{$k}->{pop} || 0;
    $out{$k}->{ipv4} *= 1;
