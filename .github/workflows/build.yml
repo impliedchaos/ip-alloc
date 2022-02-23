@@ -1,0 +1,42 @@
+name: IP Allocation data build
+
+on:
+  schedule:
+    # Daily at 03:19
+    -cron: '19 3 * * *'
+  workflow_dispatch:
+    inputs:
+      description: nothing
+      required: false
+      default: ignore
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Install Dependencies
+        run: sudo apt update && sudo apt install geoip-bin libgeoip-dev
+      - name: Fetch Statistics
+        run: bash fetchdata.sh
+      - name: Preprocess RIPE NCC data
+        run: |
+          mv ripe.lst ripe.old
+          perl ripepreproc.pl < ripe.old > ripe.lst
+      - name: Build Data
+        run: |
+          perl ipcount.pl
+          TS=`date -u`
+          sed -e "s/%TIMESTAMP/$TS/" res/header.html > index.html
+          cat ip_alloc.html >> index.html
+          echo '<p>Timestamps of resources:</p><pre>' >> index.html
+          cat timestamp >> index.html
+          echo '</pre>' >> index.html
+          cat res/footer.html >> index.html
+      - name: commit changes
+        run: |
+           git config user.name "github-actions" && git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+           git add index.html ip_alloc.json
+           git commit -m "`date -u` auto-build" && git push
