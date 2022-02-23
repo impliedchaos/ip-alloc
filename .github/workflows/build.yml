@@ -3,7 +3,7 @@ name: IP Allocation data build
 on:
   schedule:
     # Daily at 03:19
-    -cron: '19 3 * * *'
+    - cron: '19 3 * * *'
   workflow_dispatch:
     inputs:
       description: nothing
