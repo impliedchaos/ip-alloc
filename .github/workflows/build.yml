@@ -19,7 +19,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Install Dependencies
-        run: sudo apt update && sudo apt install geoip-bin libgeoip-dev
+        run: sudo apt update && sudo apt install geoip-bin libgeoip-dev whois
       - name: Fetch Statistics
         run: bash fetchdata.sh
       - name: Preprocess RIPE NCC data
@@ -30,7 +30,7 @@ jobs:
         run: |
           perl ipcount.pl
           TS=`date -u`
-          sed -e "s/%TIMESTAMP/$TS/" res/header.html > index.html
+          sed -e "s/%TIMESTAMP%/$TS/" res/header.html > index.html
           cat ip_alloc.html >> index.html
           echo '<p>Timestamps of resources:</p><pre>' >> index.html
           cat timestamp >> index.html

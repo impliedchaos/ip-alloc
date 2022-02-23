@@ -72,7 +72,7 @@ print HTML "</table>\n<br/>\n<h2>IPv6</h2>\n<table id=\"ipv6\">\n";
 print HTML "<tr><th>Rank</th><th>Country</th><th>IP Addresses</th><th>Population</th></tr>\n";
 print HTML "<tr><td></td><td>Total World Allocation</td><td>".$out{Total}->{ipv6}."</td><td>".$out{Total}->{pop}."</td></tr>\n";
 $c = 1;
-foreach my $k (sort {$out{$b}->{ipv4} <=> $out{$a}->{ipv4}} sort {$out{$b}->{pop} <=> $out{$a}->{pop}} sort {$out{$a}->{name} cmp $out{$b}->{name}} keys(%out)) {
+foreach my $k (sort {substr("0" x 50 . $out{$b}->{ipv6},-50) cmp substr("0" x 50 . $out{$a}->{ipv6},-50)} sort {$out{$b}->{pop} <=> $out{$a}->{pop}} sort {$out{$a}->{name} cmp $out{$b}->{name}} keys(%out)) {
    next if ($k eq 'Total');
    printf HTML "<tr><td>%d</td><td>%s</td><td>%s</td><td>%d</td></tr>\n",$c++, $out{$k}->{name}, $out{$k}->{ipv6}, $out{$k}->{pop};
 }
