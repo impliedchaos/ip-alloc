@@ -78,10 +78,10 @@ print OUT "<tr><td>Broadcast IP addresses</td><td class=\"num\">$brd</td></tr>\n
 print OUT "<tr><td>Reserved IP addresses</td><td class=\"num\">$res</td></tr>\n";
 print OUT "<tr><td>Total (should equal 2<sup>32</sup>)</td><td class=\"num\">".($tot+$ava+$brd+$res)."</td></tr>\n";
 if ($tot+$ava+$brd+$res == 2**32) {
-   print OUT "<tr><tfoot colspan=2>Entirety of IPv4 address space accounted for.</tfoot></tr>\n";
+   print OUT "<tr><td class=\"sumok\" colspan=2>Entirety of IPv4 address space accounted for.</td></tr>\n";
 } else {
    my $diff = ($tot+$ava+$brd+$res) - 2**32;
-   print OUT "<tr><tfoot colspan=2>Off by $diff IP addresses.</tfoot></tr>\n";
+   print OUT "<tr><td class=\"sum\" colspan=2>Off by $diff IP addresses.</td></tr>\n";
 }
 print OUT "</table>\n";
 open(IN, "<", "netlist.txt") or die($!);

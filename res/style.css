@@ -7,3 +7,5 @@ td.bignum {text-align: right;}
 td.percent {text-align: right;}
 td.pc {text-align:right;}
 td.bigpc {text-align:right;}
+td.sum {background-color: #fdd;}
+td.sumok {background-color: #dfd;}
