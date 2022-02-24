@@ -1,7 +1,7 @@
    <script>
       // Number formatting.  We go through all of our numbers and print them with the localized number formatting.
       let f = new Intl.NumberFormat;
-      let n = document.getElementsByClassName('num');
+      let n = document.getElementsByClassName('num','percent','pc');
       for (let i = 0; i < n.length; i++) {
          n[i].innerText = f.format(n[i].innerText)
       }
@@ -10,7 +10,7 @@
       let sep=','; // I'm USian, so I default to a comma.
       // Try to guess if locality uses decimal point as a separator.
       if (f.format(1000).substring(1,1) === '.') sep='.';
-      let b = document.getElementsByClassName('bignum');
+      let b = document.getElementsByClassName('bignum','bigpc');
       for (let i = 0; i < n.length; i++) {
          b[i].innerText = b[i].innerText.replace(/\B(?=(\d{3})+(?!\d))/g,sep)
       }

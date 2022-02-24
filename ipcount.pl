@@ -5,7 +5,7 @@ use strict;
 use warnings;
 use JSON;
 
-my (%out,%c,%c6,%ci);
+my (%out,%c,%c6);
 my $tot=0;
 
 open(my $in, "<", "countryInfo.txt") or die($!);
@@ -14,14 +14,14 @@ while (<$in>) {
    next if (/^\s*$/);
    my @t = split(/\t/,$_);
    next if ($t[0] =~ /AN|CS/);
-   $ci{$t[0]} = { name=>$t[4], pop=>$t[7] };
+   $out{$t[0]} = { name=>$t[4], pop=>$t[7] };
    $tot += $t[7];
 }
 close($in);
 $out{Total} = { name=>'World', pop=>$tot };
-$out{EU} = { name=>'"Europe"', pop=>0};
+$out{EU} = { name=>'"Europe"', pop=>0 };
 
-use bigint;
+use bignum;
 foreach my $f ('afrinic.lst','apnic.lst','arin.lst','lacnic.lst','ripe.lst') {
    open(my $in, '<', $f) or die($!);
    while(<$in>) {
@@ -40,19 +40,38 @@ foreach my $f ('afrinic.lst','apnic.lst','arin.lst','lacnic.lst','ripe.lst') {
    }
    close($in);
 }
+$tot = $c{Total};
 foreach my $k (keys %c) {
+   $out{$k}->{percentv4} = $c{$k} / $tot * 100;
+   $out{$k}->{percentv4} = "$out{$k}->{percentv4}";
+   if ($out{$k}->{pop}) {
+      $out{$k}->{pcv4} = $c{$k} / $out{$k}->{pop};
+      $out{$k}->{pcv4} = "$out{$k}->{pcv4}";
+   }
    $out{$k}->{ipv4} = "$c{$k}";
 }
+$tot = $c6{Total};
 foreach my $k (keys %c6) {
+   $out{$k}->{percentv6} = $c6{$k} / $tot * 100;
+   $out{$k}->{percentv6} = "$out{$k}->{percentv6}";
+   if ($out{$k}->{pop}) {
+      $out{$k}->{pcv6} = $c6{$k} / $out{$k}->{pop};
+      $out{$k}->{pcv6} = "$out{$k}->{pcv6}";
+   }
    $out{$k}->{ipv6} = "$c6{$k}";
 }
-no bigint;
+no bignum;
 foreach my $k (keys %out) {
-   next if ($k =~ /Total|EU/);
-   $out{$k}->{name} = $ci{$k}->{name} || $k;
-   $out{$k}->{pop} = $ci{$k}->{pop} || 0;
-   $out{$k}->{ipv4} *= 1;
+   $out{$k}->{ipv4} //= '0';
    $out{$k}->{ipv6} //= '0';
+   $out{$k}->{percentv4} //= '0';
+   $out{$k}->{percentv6} //= '0';
+   $out{$k}->{pcv4} //= '0';
+   $out{$k}->{pcv6} //= '0';
+   $out{$k}->{ipv4} *= 1;
+   $out{$k}->{pcv4} *= 1.0;
+   $out{$k}->{percentv4} *= 1.0;
+   $out{$k}->{percentv6} *= 1.0;
 }
 open(JSON, ">", "ip_alloc.json") or die($!);
 print JSON encode_json(\%out);
@@ -61,20 +80,20 @@ close(JSON);
 open(HTML, ">", "ip_alloc.html") or die($!);
 print HTML "<h2>IPv4</h2>\n";
 print HTML "<table id=\"ipv4\">\n";
-print HTML "<tr><th>Rank</th><th>Country</th><th>IP Addresses</th><th>Population</th></tr>\n";
-print HTML "<tr><td></td><td>Total World Allocation</td><td class=\"num\">".$out{Total}->{ipv4}."</td><td class=\"num\">".$out{Total}->{pop}."</td></tr>\n";
+print HTML "<tr><th>Rank</th><th>Country</th><th>IP Addresses</th><th>%</th><th>Population</th><th>IP Addresses Per Capita</tr>\n";
+print HTML "<tr><td></td><td>Total World Allocation</td><td class=\"num\">".$out{Total}->{ipv4}."</td><td class=\"percent\">100</td><td class=\"num\">".$out{Total}->{pop}."</td><td class=\"pc\">".$out{Total}->{pcv4}."</td></tr>\n";
 my $c = 1;
 foreach my $k (sort {$out{$b}->{ipv4} <=> $out{$a}->{ipv4}} sort {$out{$b}->{pop} <=> $out{$a}->{pop}} sort {$out{$a}->{name} cmp $out{$b}->{name}} keys(%out)) {
    next if ($k eq 'Total');
-   printf HTML "<tr><td>%d</td><td>%s</td><td class=\"num\">%d</td><td class=\"num\">%d</td></tr>\n",$c++, $out{$k}->{name}, $out{$k}->{ipv4}, $out{$k}->{pop};
+   printf HTML "<tr><td>%d</td><td>%s</td><td class=\"num\">%d</td><td class=\"percent\">%0.5f</td><td class=\"num\">%d</td><td class=\"pc\">%s</td></tr>\n",$c++, $out{$k}->{name}, $out{$k}->{ipv4}, $out{$k}->{percentv4}, $out{$k}->{pop}, $out{$k}->{pcv4};
 }
 print HTML "</table>\n<br/>\n<h2>IPv6</h2>\n<table id=\"ipv6\">\n";
-print HTML "<tr><th>Rank</th><th>Country</th><th>IP Addresses</th><th>Population</th></tr>\n";
-print HTML "<tr><td></td><td>Total World Allocation</td><td class=\"bignum\">".$out{Total}->{ipv6}."</td><td class=\"num\">".$out{Total}->{pop}."</td></tr>\n";
+print HTML "<tr><th>Rank</th><th>Country</th><th>IP Addresses</th><th>%</th><th>Population</th><th>IP Addresses Per Capita</tr>\n";
+print HTML "<tr><td></td><td>Total World Allocation</td><td class=\"bignum\">".$out{Total}->{ipv6}."</td><td class=\"percent\">100</td><td class=\"num\">".$out{Total}->{pop}."</td><td class=\"bigpc\">".$out{Total}->{pcv6}."</td></tr>\n";
 $c = 1;
 foreach my $k (sort {substr("0" x 50 . $out{$b}->{ipv6},-50) cmp substr("0" x 50 . $out{$a}->{ipv6},-50)} sort {$out{$b}->{pop} <=> $out{$a}->{pop}} sort {$out{$a}->{name} cmp $out{$b}->{name}} keys(%out)) {
    next if ($k eq 'Total');
-   printf HTML "<tr><td>%d</td><td>%s</td><td class=\"bignum\">%s</td><td class=\"num\">%d</td></tr>\n",$c++, $out{$k}->{name}, $out{$k}->{ipv6}, $out{$k}->{pop};
+   printf HTML "<tr><td>%d</td><td>%s</td><td class=\"bignum\">%s</td><td class=\"percent\">%0.5f</td><td class=\"num\">%d</td><td class=\"bigpc\">%s</td></tr>\n",$c++, $out{$k}->{name}, $out{$k}->{ipv6}, $out{$k}->{percentv6}, $out{$k}->{pop}, $out{$k}->{pcv6};
 }
 print HTML "</table>\n<br/>\n";
 close(HTML);
