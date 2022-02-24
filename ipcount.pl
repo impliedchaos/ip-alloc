@@ -25,7 +25,7 @@ $out{Total} = { name=>'World', pop=>$tot };
 $out{EU} = { name=>'"Europe"', pop=>0 };
 
 use bignum;
-foreach my $f ('afrinic.lst','apnic.lst','arin.lst','lacnic.lst','ripe.lst') {
+foreach my $f ('afrinic.lst','apnic.lst','arin.lst','lacnic.lst','ripe.lst','iana.lst') {
    open(my $in, '<', $f) or die($!);
    while(<$in>) {
       chomp;
