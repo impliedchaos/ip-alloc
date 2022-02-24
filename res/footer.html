@@ -1,8 +1,9 @@
    <script>
-      document.getElementsByClassName('num').forEach(e => {
-         let x = parseInt(e.innerText);
-         e.innerText = x.toLocaleString();
-      });
+      let n = document.getElementsByClassName('num')
+      for (let i = 0; i < n.length; i++) {
+         let x = parseInt(n[i].innerText);
+         n[i].innerText = x.toLocaleString();
+      }
    </script>
    </body>
 </html>
