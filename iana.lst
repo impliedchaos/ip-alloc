@@ -1,0 +1,21 @@
+iana|ZZ|ipv4|0.0.0.0|16777216|19810901|reserved|rfc791
+iana|ZZ|ipv4|10.0.0.0|16777216|19960201|reserved|rfc1918
+iana|ZZ|ipv4|172.16.0.0|1048576|19960201|reserved|rfc1918
+iana|ZZ|ipv4|192.168.0.0|65536|19960201|reserved|rfc1918
+iana|ZZ|ipv4|127.0.0.0|16777216|19810901|reserved|rfc1122
+iana|ZZ|ipv4|224.0.0.0|268435456|19890801|reserved|multicast
+iana|ZZ|ipv4|240.0.0.0|268435456|19890801|reserved|rfc1122
+iana|ZZ|ipv4|100.64.0.0|4194304|20120401|reserved|rfc6598
+iana|ZZ|ipv4|169.254.0.0|65536|20050501|reserved|rfc3927
+iana|ZZ|ipv4|192.0.0.0|256|20100101|reserved|rfc6890
+iana|ZZ|ipv4|192.0.2.0|256|20100101|reserved|rfc5737
+iana|ZZ|ipv4|192.31.196.0|256|20141201|reserved|rfc7535
+iana|ZZ|ipv4|192.52.193.0|256|20141201|reserved|rfc7450
+iana|ZZ|ipv4|192.88.99.0|256|20010601|reserved|rfc7526
+iana|ZZ|ARIN HAS THIS|192.175.48.0|256|19960101|reserved|rfc7534
+iana|ZZ|ipv4|198.18.0.0|131072|19990301|reserved|rfc2544
+iana|ZZ|APNIC HAS THIS|198.51.100.0|256|20100101|reserved|rfc5737
+iana|ZZ|APNIC HAS THIS|203.0.113.0|256|20100101|reserved|rfc5737
+iana|ZZ|ipv4|160.20.241.0|256|20120801|available|recovered from apnic
+iana|ZZ|ipv4|160.20.245.0|256|20120801|available|recovered from apnic
+iana|ZZ|ipv4|192.47.28.0|256|20120801|available|recovered from apnic
