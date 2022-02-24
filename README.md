@@ -68,4 +68,6 @@ $ whois -h whois.lacnic.net 177.0.0.1
 
 ```
 
+You can schedule nightly downloads of the file by accessing it here: <https://github.com/impliedchaos/ip-alloc/raw/main/GeoIP-whois.dat>
+
 Author: Dave Maez
