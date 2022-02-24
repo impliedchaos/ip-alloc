@@ -40,6 +40,7 @@ foreach my $f ('afrinic.lst','apnic.lst','arin.lst','lacnic.lst','ripe.lst','ian
          } elsif ($z[6] =~ /assigned|allocated/) {
             $c{$z[1]} += $z[4]-2;
             $c{Total} += $z[4]-2;
+            $brd += 2;
          }
       } elsif ($z[2] eq 'ipv6') {
          next unless ($z[6] =~ /assigned|allocated/);
