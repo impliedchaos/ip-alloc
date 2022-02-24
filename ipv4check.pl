@@ -18,6 +18,7 @@ sub getnet {
    $out{end} = $end;
    $out{sint} = $sint;
    $out{eint} = $eint;
+   $out{bits} = $bits;
    return \%out;
 }
 
@@ -62,7 +63,11 @@ foreach my $f (keys %IA) {
          $brd += 2;
       }
       my $x = getnet($z[3],$z[4]);
-      print OUT $x->{sint}.' '.$x->{eint}.' '.$f.' '.$z[6].' '.$x->{cidr}."\n";
+      if ($x->{bits} - int($x->bits) > 0) {
+         print OUT $x->{sint}.' '.$x->{eint}.' '.$f.' '.$z[6].' '.$x->{start}.'-'.$x->{end}."\n";
+      } else {
+         print OUT $x->{sint}.' '.$x->{eint}.' '.$f.' '.$z[6].' '.$x->{cidr}."\n";
+      }
    }
    close(IN);
 }
