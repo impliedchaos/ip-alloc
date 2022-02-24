@@ -1,8 +1,18 @@
    <script>
-      let n = document.getElementsByClassName('num')
+      // Number formatting.  We go through all of our numbers and print them with the localized number formatting.
+      let f = new Intl.NumberFormat;
+      let n = document.getElementsByClassName('num');
       for (let i = 0; i < n.length; i++) {
-         let x = parseInt(n[i].innerText);
-         n[i].innerText = x.toLocaleString();
+         n[i].innerText = f.format(n[i].innerText)
+      }
+      // Except for our big numbers.  These pose a problem since they get converted to floats before formatting, and lose all of their precision.
+      // so we'll cheat this way, however this is likely to only work for latin-based languages. It'll end up as USian formatting for everyone else. Sorry.
+      let sep=','; // I'm USian, so I default to a comma.
+      // Try to guess if locality uses decimal point as a separator.
+      if (f.format(1000).substring(1,1) === '.') sep='.';
+      let b = document.getElementsByClassName('bignum');
+      for (let i = 0; i < n.length; i++) {
+         b[i].innerText = b[i].innerText.replace(/\B(?=(\d{3})+(?!\d))/g,sep)
       }
    </script>
    </body>

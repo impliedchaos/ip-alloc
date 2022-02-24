@@ -3,3 +3,4 @@ table {border-collapse: collapse;}
 td {border: 1px solid #777; padding: 5px 10px;}
 tr:nth-child(even) { background-color: #ddd;}
 td.num {text-align: right;}
+td.bignum {text-align: right;}

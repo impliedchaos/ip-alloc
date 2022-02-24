@@ -9,22 +9,22 @@ but it's out of date and in need of updating.
 
 So I made this instead.
 
-### Sources:
+## Sources
 
 * Population and Country name data comes from geoname.org's [countryInfo.txt file](https://download.geonames.org/export/dump/countryInfo.txt).
 * IP Address counts come from the delegation statistics of all 5 RIRs:
-  1. AFRINIC <https://ftp.afrinic.net/pub/stats/afrinic/delegated-afrinic-extended-latest>
-  2. APNIC <https://ftp.apnic.net/stats/apnic/delegated-apnic-extended-latest>
-  3. ARIN <https://ftp.arin.net/pub/stats/arin/delegated-arin-extended-latest>
-  4. LACNIC <https://ftp.lacnic.net/pub/stats/lacnic/delegated-lacnic-extended-latest>
-  5. RIPE NCC <https://ftp.ripe.net/ripe/stats/delegated-ripencc-extended-latest>
+  * AFRINIC <https://ftp.afrinic.net/pub/stats/afrinic/delegated-afrinic-extended-latest>
+  * APNIC <https://ftp.apnic.net/stats/apnic/delegated-apnic-extended-latest>
+  * ARIN <https://ftp.arin.net/pub/stats/arin/delegated-arin-extended-latest>
+  * LACNIC <https://ftp.lacnic.net/pub/stats/lacnic/delegated-lacnic-extended-latest>
+  * RIPE NCC <https://ftp.ripe.net/ripe/stats/delegated-ripencc-extended-latest>
 
 RIPE NCC has several IP assignments listing the country as "EU".  So the data for RIPE NCC is preprocessed and the country for those subnets is attempted to be discerned with a whois query.  This works in several cases but in others it doesn't, so "Europe" shows up as a nation in the listing.
 
-### IP Address Counting
+## IP Address Counting
 
 IPv4 addresses are counted by adding the size of each block minus 2.  This is to account for the ones and zeroes broadcast addresses of the subnetwork not being assignable.  This does not account for all the other subnetting done to the blocks by their owners (which further reduces useable address space).
 
 The IPv6 address space is enormous.  The counts are astronomical and kind of silly, but I added it for completeness.
 
-- Dave Maez
+Author: Dave Maez
