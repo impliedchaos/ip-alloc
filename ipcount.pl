@@ -19,7 +19,7 @@ while (<$in>) {
 }
 close($in);
 $out{Total} = { name=>'World', pop=>$tot };
-$out{EU} = { name=>'"Europe"', pop=>'--'};
+$out{EU} = { name=>'"Europe"', pop=>0};
 
 use bigint;
 foreach my $f ('afrinic.lst','apnic.lst','arin.lst','lacnic.lst','ripe.lst') {
@@ -62,7 +62,7 @@ open(HTML, ">", "ip_alloc.html") or die($!);
 print HTML "<h2>IPv4</h2>\n";
 print HTML "<table id=\"ipv4\">\n";
 print HTML "<tr><th>Rank</th><th>Country</th><th>IP Addresses</th><th>Population</th></tr>\n";
-print HTML "<tr><td></td><td>Total World Allocation</td><td>".$out{Total}->{ipv4}."</td><td>".$out{Total}->{pop}."</td></tr>\n";
+print HTML "<tr><td></td><td>Total World Allocation</td><td class=\"num\">".$out{Total}->{ipv4}."</td><td class=\"num\">".$out{Total}->{pop}."</td></tr>\n";
 my $c = 1;
 foreach my $k (sort {$out{$b}->{ipv4} <=> $out{$a}->{ipv4}} sort {$out{$b}->{pop} <=> $out{$a}->{pop}} sort {$out{$a}->{name} cmp $out{$b}->{name}} keys(%out)) {
    next if ($k eq 'Total');
@@ -70,7 +70,7 @@ foreach my $k (sort {$out{$b}->{ipv4} <=> $out{$a}->{ipv4}} sort {$out{$b}->{pop
 }
 print HTML "</table>\n<br/>\n<h2>IPv6</h2>\n<table id=\"ipv6\">\n";
 print HTML "<tr><th>Rank</th><th>Country</th><th>IP Addresses</th><th>Population</th></tr>\n";
-print HTML "<tr><td></td><td>Total World Allocation</td><td>".$out{Total}->{ipv6}."</td><td>".$out{Total}->{pop}."</td></tr>\n";
+print HTML "<tr><td></td><td>Total World Allocation</td><td class=\"num\">".$out{Total}->{ipv6}."</td><td class=\"num\">".$out{Total}->{pop}."</td></tr>\n";
 $c = 1;
 foreach my $k (sort {substr("0" x 50 . $out{$b}->{ipv6},-50) cmp substr("0" x 50 . $out{$a}->{ipv6},-50)} sort {$out{$b}->{pop} <=> $out{$a}->{pop}} sort {$out{$a}->{name} cmp $out{$b}->{name}} keys(%out)) {
    next if ($k eq 'Total');
