@@ -31,19 +31,11 @@ foreach my $f ('afrinic.lst','apnic.lst','arin.lst','lacnic.lst','ripe.lst','ian
       chomp;
       my @z = split(/\|/,$_);
       next if (scalar(@z) < 7);
+      next unless ($z[6] =~ /assigned|allocated/);
       if ($z[2] eq 'ipv4') {
-         if ($z[6] eq 'reserved') {
-            $res += $z[4];
-         } elsif ($z[6] eq 'available') {
-            $ava += $z[4]-2;
-            $brd += 2;
-         } elsif ($z[6] =~ /assigned|allocated/) {
-            $c{$z[1]} += $z[4]-2;
-            $c{Total} += $z[4]-2;
-            $brd += 2;
-         }
+         $c{$z[1]} += $z[4]-2;
+         $c{Total} += $z[4]-2;
       } elsif ($z[2] eq 'ipv6') {
-         next unless ($z[6] =~ /assigned|allocated/);
          my $t = 2 ** (128 - $z[4]);
          $c6{$z[1]} += $t;
          $c6{Total} += $t;
@@ -99,12 +91,10 @@ foreach my $k (sort {$out{$b}->{ipv4} <=> $out{$a}->{ipv4}} sort {$out{$b}->{pop
    printf HTML "<tr><td>%d</td><td>%s</td><td class=\"num\">%d</td><td class=\"percent\">%0.5f</td><td class=\"num\">%d</td><td class=\"pc\">%0.5f</td></tr>\n",$c++, $out{$k}->{name}, $out{$k}->{ipv4}, $out{$k}->{percentv4}, $out{$k}->{pop}, $out{$k}->{pcv4};
 }
 print HTML "</table>\n";
-print HTML "<p>Allocated IPv4 addresses: $out{Total}->{ipv4}</p>\n";
-print HTML "<p>Reserved IPv4 addresses: $res</p>\n";
-print HTML "<p>Broadcast IPv4 addresses: $brd</p>\n";
-print HTML "<p>Available IPv4 addresses: $ava</p>\n";
-if ($res+$brd+$ava+$out{Total}->{ipv4} == 2**32) {
-   print HTML "<p>Entirety of 32bit IPv4 address space accounted for.</p>"
+if ( -e 'ipv4status.html') {
+   open(IN,'<','ipv4status.html') or die($!);
+   while (my $l = <IN>) {print HTML $l;}
+   close(IN);
 }
 print HTML "<br/>\n";
 print HTML "<h2>IPv6</h2>\n<table id=\"ipv6\">\n";

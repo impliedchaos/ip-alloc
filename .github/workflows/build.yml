@@ -28,6 +28,7 @@ jobs:
           perl ripepreproc.pl < ripe.old > ripe.lst
       - name: Build Data
         run: |
+          perl ipv4check.pl
           perl ipcount.pl
           TS=`date -u`
           sed -e "s/%TIMESTAMP%/$TS/" res/header.html > index.html
