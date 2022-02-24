@@ -27,4 +27,45 @@ IPv4 addresses are counted by adding the size of each block minus 2.  This is to
 
 The IPv6 address space is enormous.  The counts are astronomical and kind of silly, but I added it for completeness.
 
+## Other Stuff
+
+Since we're going through the trouble of parsing the RIR delegation stats every night, this project also creates the `GeoIP-whois.dat` file that can be used to determine the correct whois server for an IP (for those of us that do automated whois queries).  The following countries in the file should be mapped to the corresponding whois server:
+
+* AP, Asia/Pacific Region - whois.apnic.net
+* EU, Europe - whois.ripe.net
+* MX, Mexico - whois.lacnic.net
+* O1, Other - whois.iana.org
+* US, United States - whois.arin.net
+* ZA, South Africa - whois.afrinic.net
+
+Example usage: 
+
+```bash
+$ geoiplookup -f ./GeoIP-whois.dat 0.0.0.1
+GeoIP Country Edition: O1, Other
+$ whois -h whois.iana.org 0.0.0.1
+...
+$ geoiplookup -f ./GeoIP-whois.dat 1.0.0.1
+GeoIP Country Edition: AP, Asia/Pacific Region
+$ whois -h whois.apnic.net 1.0.0.1
+...
+$ geoiplookup -f ./GeoIP-whois.dat 2.0.0.1
+GeoIP Country Edition: EU, Europe
+$ whois -h whois.ripe.net 2.0.0.1
+...
+$ geoiplookup -f ./GeoIP-whois.dat 3.0.0.1
+GeoIP Country Edition: US, United States
+$ whois -h whois.arin.net 3.0.0.1
+...
+$ geoiplookup -f ./GeoIP-whois.dat 41.0.0.1
+GeoIP Country Edition: ZA, South Africa
+$ whois -h whois.afrinic.net 41.0.0.1
+...
+$ geoiplookup -f ./GeoIP-whois.dat 177.0.0.1
+GeoIP Country Edition: MX, Mexico
+$ whois -h whois.lacnic.net 177.0.0.1
+...
+
+```
+
 Author: Dave Maez
