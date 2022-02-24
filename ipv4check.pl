@@ -53,17 +53,27 @@ foreach my $f (keys %IA) {
       next if (scalar(@z) < 7);
       next if ($z[2] ne 'ipv4');
       next if ($z[6] !~ /assigned|allocated|reserved|available/);
+      my $x = getnet($z[3],$z[4]);
+      my $pow2 = 1;
+      $pow2 = 0 if ($x->{bits} - int($x->{bits}) > 0);
       if ($z[6] =~ /assigned|allocated/) {
          $tot += $z[4] - 2;
          $brd += 2;
+         if (! $pow2) {
+            $tot -= 2;
+            $brd += 2;
+         }
       } elsif ($z[6] =~ /reserved/) {
          $res += $z[4];
       } elsif ($z[6] =~ /available/) {
          $ava += $z[4]-2;
          $brd += 2;
+         if (! $pow2) {
+            $ava -= 2;
+            $brd += 2;
+         }
       }
-      my $x = getnet($z[3],$z[4]);
-      if ($x->{bits} - int($x->bits) > 0) {
+      if (! $pow2) {
          print OUT $x->{sint}.' '.$x->{eint}.' '.$f.' '.$z[6].' '.$x->{start}.'-'.$x->{end}."\n";
       } else {
          print OUT $x->{sint}.' '.$x->{eint}.' '.$f.' '.$z[6].' '.$x->{cidr}."\n";

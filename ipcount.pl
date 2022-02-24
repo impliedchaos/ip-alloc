@@ -35,6 +35,11 @@ foreach my $f ('afrinic.lst','apnic.lst','arin.lst','lacnic.lst','ripe.lst','ian
       if ($z[2] eq 'ipv4') {
          $c{$z[1]} += $z[4]-2;
          $c{Total} += $z[4]-2;
+         my $bits = log($z[4])/log(2);
+         if ($bits - int($bits) > 0) {
+            $c{$z[1]} -= 2;
+            $c{Total} -= 2;
+         }
       } elsif ($z[2] eq 'ipv6') {
          my $t = 2 ** (128 - $z[4]);
          $c6{$z[1]} += $t;

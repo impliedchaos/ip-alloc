@@ -23,7 +23,7 @@ RIPE NCC has several IP assignments listing the country as "EU".  So the data fo
 
 ## IP Address Counting
 
-IPv4 addresses are counted by adding the size of each block minus 2.  This is to account for the ones and zeroes broadcast addresses of the subnetwork not being assignable.  This does not account for all the other subnetting done to the blocks by their owners (which further reduces useable address space).
+IPv4 addresses are counted by adding the size of each block minus 2.  This is to account for the ones and zeroes broadcast addresses of the subnetwork not being assignable.  Network blocks with a length that isn't a power of two have another 2 addresses subtracked since it will take at least two subnetworks for the block. This does not account for all the other subnetting done to the blocks by their owners (which further reduces useable address space).
 
 The IPv6 address space is enormous.  The counts are astronomical and kind of silly, but I added it for completeness.
 
