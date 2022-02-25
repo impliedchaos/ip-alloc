@@ -1,6 +1,6 @@
 # ip-alloc
 
-![Build](https://img.shields.io/github/workflow/status/impliedchaos/ip-alloc/IP%20Allocation%20data%20build?logo=github)
+![Build](https://github.com/impliedchaos/ip-alloc/actions/workflows/build.yml/badge.svg)
 
 You can view the generated data at [this link](https://impliedchaos.github.io/ip-alloc/).
 
