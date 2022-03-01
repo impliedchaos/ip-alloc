@@ -12,10 +12,10 @@ iana|ZZ|ipv4|192.0.2.0|256|20100101|reserved|rfc5737
 iana|ZZ|ipv4|192.31.196.0|256|20141201|reserved|rfc7535
 iana|ZZ|ipv4|192.52.193.0|256|20141201|reserved|rfc7450
 iana|ZZ|ipv4|192.88.99.0|256|20010601|reserved|rfc7526
-iana|ZZ|ARIN HAS THIS|192.175.48.0|256|19960101|reserved|rfc7534
+iana|ZZ|ipv4|192.175.48.0|256|19960101|reserved|rfc7534
 iana|ZZ|ipv4|198.18.0.0|131072|19990301|reserved|rfc2544
-iana|ZZ|APNIC HAS THIS|198.51.100.0|256|20100101|reserved|rfc5737
-iana|ZZ|APNIC HAS THIS|203.0.113.0|256|20100101|reserved|rfc5737
+iana|ZZ|ipv4|198.51.100.0|256|20100101|reserved|rfc5737
+iana|ZZ|ipv4|203.0.113.0|256|20100101|reserved|rfc5737
 iana|ZZ|ipv4|160.20.241.0|256|20120801|available|recovered from apnic
 iana|ZZ|ipv4|160.20.245.0|256|20120801|available|recovered from apnic
 iana|ZZ|ipv4|192.47.28.0|256|20120801|available|recovered from apnic
