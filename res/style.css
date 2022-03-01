@@ -9,3 +9,5 @@ td.pc {text-align:right;}
 td.bigpc {text-align:right;}
 td.sum {background-color: #fdd;}
 td.sumok {background-color: #dfd;}
+p.err {color: #400;}
+p.ok {color: #040;}
