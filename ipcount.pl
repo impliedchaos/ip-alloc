@@ -81,6 +81,7 @@ foreach my $k (keys %out) {
    $out{$k}->{percentv4} *= 1.0;
    $out{$k}->{percentv6} *= 1.0;
 }
+delete($out{EU}) if ($out{EU}->{ipv4} == 0 && $out{EU}->{ipv6} eq "0");
 open(JSON, ">", "ip_alloc.json") or die($!);
 print JSON encode_json(\%out);
 close(JSON);
@@ -93,6 +94,7 @@ print HTML "<tr><td></td><td>Total World Allocation</td><td class=\"num\">".$out
 my $c = 1;
 foreach my $k (sort {$out{$b}->{ipv4} <=> $out{$a}->{ipv4}} sort {$out{$b}->{pop} <=> $out{$a}->{pop}} sort {$out{$a}->{name} cmp $out{$b}->{name}} keys(%out)) {
    next if ($k eq 'Total');
+   next if ($k eq 'EU' && $out{EU}->{ipv4} == 0);
    printf HTML "<tr><td>%d</td><td>%s</td><td class=\"num\">%d</td><td class=\"percent\">%0.5f</td><td class=\"num\">%d</td><td class=\"pc\">%0.5f</td></tr>\n",$c++, $out{$k}->{name}, $out{$k}->{ipv4}, $out{$k}->{percentv4}, $out{$k}->{pop}, $out{$k}->{pcv4};
 }
 print HTML "</table>\n";
@@ -108,7 +110,15 @@ print HTML "<tr><td></td><td>Total World Allocation</td><td class=\"bignum\">".$
 $c = 1;
 foreach my $k (sort {substr("0" x 50 . $out{$b}->{ipv6},-50) cmp substr("0" x 50 . $out{$a}->{ipv6},-50)} sort {$out{$b}->{pop} <=> $out{$a}->{pop}} sort {$out{$a}->{name} cmp $out{$b}->{name}} keys(%out)) {
    next if ($k eq 'Total');
+   next if ($k eq 'EU' && $out{EU}->{ipv6} eq "0");
    printf HTML "<tr><td>%d</td><td>%s</td><td class=\"bignum\">%s</td><td class=\"percent\">%0.5f</td><td class=\"num\">%d</td></tr>\n",$c++, $out{$k}->{name}, $out{$k}->{ipv6}, $out{$k}->{percentv6}, $out{$k}->{pop};
 }
 print HTML "</table>\n<br/>\n";
 close(HTML);
+
+open(CSV, ">", "ip_alloc.csv") or die($!);
+print CSV "\"code\",\"country name\",\"population\",\"ipv4\",\"ipv6\"\n";
+foreach my $k (sort {$out{$a}->{name} cmp $out{$b}->{name}} keys(%out)) {
+   print CSV "\"$k\",\"$out{$k}->{name}\",\"$out{$k}->{pop}\",\"$out{$k}->{ipv4}\",\"$out{$k}->{ipv6}\"\n";
+}
+close(CSV);

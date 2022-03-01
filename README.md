@@ -2,7 +2,7 @@
 
 ![Build](https://github.com/impliedchaos/ip-alloc/actions/workflows/build.yml/badge.svg)
 
-You can view the generated data at [this link](https://impliedchaos.github.io/ip-alloc/).
+You can view the generated data at [this link](https://impliedchaos.github.io/ip-alloc/).  It is generated daily.
 
 I needed a count of IP addresses allocated by country.  Wikipedia has [this page](https://en.wikipedia.org/wiki/List_of_countries_by_IPv4_address_allocation),
 but it's out of date.
@@ -12,7 +12,7 @@ So I made this instead.
 ## Sources
 
 * Population and Country name data comes from geoname.org's [countryInfo.txt export file](https://download.geonames.org/export/dump/countryInfo.txt).
-* IP Address counts come from the delegation statistics of all 5 RIRs:
+* IP Address counts come from the latest delegation statistics of all 5 RIRs:
   * AFRINIC <https://ftp.afrinic.net/pub/stats/afrinic/delegated-afrinic-extended-latest>
   * APNIC <https://ftp.apnic.net/stats/apnic/delegated-apnic-extended-latest>
   * ARIN <https://ftp.arin.net/pub/stats/arin/delegated-arin-extended-latest>
@@ -20,7 +20,7 @@ So I made this instead.
   * RIPE NCC <https://ftp.ripe.net/ripe/stats/delegated-ripencc-extended-latest>
 * The contents of the `iana.lst` file comes from the [IANA IPv4 Special-Purpose Address Registry](https://www.iana.org/assignments/iana-ipv4-special-registry/iana-ipv4-special-registry.xhtml).
 
-RIPE NCC has several IP assignments listing the country as "EU".  So the data for RIPE NCC is preprocessed and the country for those subnets is attempted to be discerned with a whois query.  This works in several cases but in others it doesn't, so "Europe" shows up as a nation in the listing.
+RIPE NCC has several IP assignments listing the country as "EU".  So the statistics for RIPE NCC is preprocessed and the country for those subnets is attempted to be discerned with a whois query.  This works in several cases but in others it doesn't, so "Europe" can sometimes show up as a nation in the listing.
 
 ## IP Address Counting
 
